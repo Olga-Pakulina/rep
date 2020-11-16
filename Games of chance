@@ -1,0 +1,145 @@
+#importing the random module
+import random
+
+#The value of money should change depending on whether you win or lose the game!
+money = 100
+
+#Write your game of chance functions here
+
+#a function that simulates flipping a coin and calling either "Heads" or "Tails"
+def coin_flip(guess, bet):
+  global money
+  num = random.randint(1, 2)
+  if num == 1:
+    coin = 'Heads'
+    print('Heads!')
+  else:
+    coin = 'Tails'
+    print('Tails!')
+  
+  if bet > money or bet < 0:
+    print('Your bet is invalid! Bet no more than $' + str(money) + ' or check if the number is positive.')
+    return 0
+
+  if coin == guess:
+    money += bet
+    print('You won $' + str(bet) + '! You have $' + str(money))
+    return money
+  if coin != guess:
+    money -= bet
+    print('You lost $' + str(bet) + '! You have $' + str(money))
+    return money
+
+
+#a function that simulates playing the game Cho-Han. The function should simulate rolling two dice and adding the results together. 
+#The player predicts whether the sum of those dice is odd or even and wins if their prediction is correct.
+def cho_han(guess, bet):
+  global money
+  dice1 = random.randint(1, 6)
+  dice2 = random.randint(1, 6)
+  dice_sum = (dice1 + dice2)%2
+  if dice_sum == 0:
+    dice = 'Even'
+    print('Even!')
+  else:
+    dice = 'Odd'
+    print('Odd!')
+  
+  if bet > money or bet < 0:
+    print('Your bet is invalid! Bet no more than $' + str(money) + ' or check if the number is positive.')
+    return 0
+
+  if guess == dice:
+   money += bet
+   print('You won $' + str(bet) + '! You have $' + str(money))
+   return money
+  if guess != dice:
+   money -= bet
+   print('You lost $' + str(bet) + '! You have $' + str(money))
+   return money
+
+#a function that simulates two players picking a card randomly from a deck of cards. The higher number wins.
+def picking_card(bet):
+  global money
+
+  if bet > money or bet < 0:
+    print('Your bet is invalid! Bet no more than $' + str(money) + ' or check if the number is positive.')
+    return 0
+
+  player1 = random.randint(1, 14)
+  player2 = random.randint(1, 14)
+  
+  print('Computer picked ' + str(player1))
+  if player1 > player2:
+   money += bet
+   print('You won $' + str(bet) + '! You have $' + str(money))
+   return money
+  elif player1 == player2:
+   print('Its a tie!')
+   return 0
+  else:
+   money -= bet
+   print('You lost $' + str(bet) + '! You have $' + str(money))
+   return money
+
+#a function that simulates some of the rules of roulette. A random number should be generated that determines which space the ball lands on.
+# Can bet on a single number or Even/Odd
+def roulette(guess, bet):
+ global money
+ number = random.randint(0, 36)
+ print(number)
+ if bet > money or bet < 0:
+    print('Your bet is invalid! Bet no more than $' + str(money) + ' or check if the number is positive.')
+    return 0
+   
+ if guess == 'Odd' or guess == 'Even':
+   if (guess == 'Odd') and (number%2 == 0) and (number != 0):
+    win = bet * 2
+    money += win
+    print('You won $' + str(win) + '! You have $' + str(money))
+    return money
+   if (guess == 'Even') and (number%2 != 0):
+     win = bet * 2
+     money += bet
+     print('You won $' + str(win) + '! You have $' + str(money))
+     return money
+   else: 
+      print('You lost!')
+      return 0
+ if guess == number:
+  win = bet * 35
+  money += win
+  print('You won $' + str(win) + '! You have $' + str(money))
+  return money
+ if guess != number:
+  print('You lost! You have $' + str(money))
+  return 0
+
+#Call your game of chance functions here
+def choose_game(name):
+  global money
+
+  if name == 'flipping_coin':
+    #Guess 'Heads' or 'Tails'
+    money += coin_flip('Heads', 10)
+    print(money)
+    return money
+  if name == 'cho_han':
+    #Guess 'Even' or 'Odd'
+    cho_han('Odd', 14)
+    print(money)
+    return money
+  if name == 'picking_card':
+    #Guess a number from 1 to 14
+    money += picking_card(90)
+    print(money)
+    return money
+  if name == 'roulette':
+    #Bet either on a number from 0 to 36, or on 'Odd' or 'Even'
+    money += roulette('Odd', 60)
+    print(money)
+    return money
+
+choose_game('cho_han')
+
+
